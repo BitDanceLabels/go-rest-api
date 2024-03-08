@@ -1,0 +1,40 @@
+<!-- /presentation/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Info</title>
+</head>
+
+<body>
+    <h1>Crypto Information</h1>
+    <label for="symbolInput">Enter Coin Symbol:</label>
+    <input type="text" id="symbolInput" placeholder="Enter symbol...">
+    <button onclick="searchCrypto()">Search</button>
+
+    <div id="cryptoInfo">
+        <!-- Hiển thị thông tin từ tìm kiếm -->
+    </div>
+
+    <!-- Thêm một phần để hiển thị thông tin chi tiết -->
+    <div id="cryptoDetail"></div>
+
+    <script>
+        async function searchCrypto() {
+            const symbol = document.getElementById('symbolInput').value;
+            const response = await fetch(`/search?symbol=${symbol}`);
+            const data = await response.json();
+
+            // Hiển thị thông tin từ tìm kiếm
+            document.getElementById('cryptoInfo').innerText = JSON.stringify(data, null, 2);
+
+            // Hiển thị thông tin chi tiết và liên kết chi tiết
+            const detailUrl = data.detail_url;
+            document.getElementById('cryptoDetail').innerHTML = `<p>Detail: <a href="${detailUrl}" target="_blank">View Detail</a></p>`;
+        }
+    </script>
+</body>
+
+</html>
